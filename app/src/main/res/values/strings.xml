@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Bryant Quizzing App</string>
+    <string name="answer3">answer3</string>
+    <string name="answer1">answer1</string>
+    <string name="answer2">answer2</string>
+    <string name="answer4">answer4</string>
+    <string name="math_quiz">Math Quiz</string>
+
+    <string-array name="quizzes">
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+        <item>Four</item>
+        <item>Five</item>
+        <item>Six</item>
+    </string-array>
+</resources>
