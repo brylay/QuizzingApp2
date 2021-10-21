@@ -46,6 +46,34 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /* https://stackoverflow.com/questions/6503574/how-to-get-html-source-code-from-url-in-android */
+
+        TextView tvht = (TextView) findViewById(R.id.tvhttp);
+        Ion.with(getApplicationContext()).load("http://www.your_URL.com").asString().setCallback(new FutureCallback<String>() {
+            @Override
+            public void onCompleted(Exception e, String result) {
+
+                tvht.setText(result);
+
+        public class HtmlCode extends Activity {
+            TextView tv;
+
+            public void onCreate(Bundle s)
+            {
+                super.onCreate(s);
+                setContentView(R.layout.httpexample);
+
+                tv = (TextView)findViewById(R.id.tvHttp);
+                Ion.with(getApplicationContext()).load("http://www.your_URL.com").asString().setCallback(new FutureCallback<String>() {
+                    @Override
+                    public void onCompleted(Exception e, String result) {
+
+                        tv.setText(result);
+                    }
+                });
+            }
+        }
+
 
 
         try {
@@ -241,4 +269,5 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
 };
