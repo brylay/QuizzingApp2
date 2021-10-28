@@ -94,11 +94,17 @@
 
     <TextView
         android:id="@+id/tvhttp"
-        android:layout_width="77dp"
-        android:layout_height="29dp"
+        android:layout_width="249dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="123dp"
+        android:layout_marginTop="278dp"
+        android:layout_marginEnd="39dp"
+        android:layout_marginBottom="373dp"
         android:text="TextView"
-        tools:layout_editor_absoluteX="179dp"
-        tools:layout_editor_absoluteY="297dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

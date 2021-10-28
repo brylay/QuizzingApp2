@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     final int[] QuestionNum = {0};
     final int[] totalGuesses = {0};
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         /* https://stackoverflow.com/questions/6503574/how-to-get-html-source-code-from-url-in-android */
 
-        Ion.with(getApplicationContext()).load("http://www.your_URL.com").asString().setCallback(new FutureCallback<String>() {
+        Ion.with(getApplicationContext()).load("https://sites.google.com/asianhope.org/mobileresources").asString().setCallback(new FutureCallback<String>() {
             @Override
             public void onCompleted(Exception e, String result) {
                 TextView tvhttp = (TextView) findViewById(R.id.tvhttp);
