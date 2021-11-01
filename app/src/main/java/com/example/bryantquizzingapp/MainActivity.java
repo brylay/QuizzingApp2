@@ -15,6 +15,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jsoup.Jsoup;
+import org.jsoup.helper.Validate;
+
+import org.jsoup.parser.Parser;
+import org.jsoup.select.Elements;
+
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -27,6 +33,13 @@ import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -217,6 +230,53 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 answer3.setBackgroundColor(Color.BLUE);
                 answer4.setBackgroundColor(Color.BLUE);
             }
+
+    public static class Extractor {
+        public static void main(String[] args) throws IOException {
+            org.jsoup.nodes.Document doc = (org.jsoup.nodes.Document) Jsoup.connect("https://sites.google.com/asianhope.org/mobileresources/home").get();
+            Elements links = doc.select("a[href]");
+            Set<String> quizLinks = new HashSet<String>();
+            for(org.jsoup.nodes.Element link:links)
+            {
+                if(link.attr("href").contains("mobileresources/q"))
+                {
+                    quizLinks.add("https://sites.google.com"+link.attr("href"));
+                }
+            }
+            System.out.println(quizLinks.size()+" quizzes found");
+            ArrayList<String> quizzes = new ArrayList<String>();
+            for(String url:quizLinks)
+            {
+                System.out.println("connecting to "+url);
+                doc = (org.jsoup.nodes.Document) Jsoup.connect(url).get();
+                quizzes.add(extractQuiz(doc.html()));
+
+            }
+            System.out.println(quizzes.size()+" quizzes extracted");
+
+        }
+
+        private static String extractQuiz(String html) throws IOException {
+            boolean strictMode = true;
+            String paragraphTagOpen = "<p[^>]+>";
+            String paragraphTagClose = "</p[^>]*>";
+            String quizTagOpen = "<quiz";
+            String quizTagClose ="</quiz>";
+
+
+
+            String quiz = html;
+            quiz = Parser.unescapeEntities(quiz, strictMode);
+            int beginQuizXml = quiz.lastIndexOf(quizTagOpen);
+            int endQuizXml = quiz.lastIndexOf(quizTagClose) + quizTagClose.length();
+
+            Validate.isTrue(beginQuizXml>=0&&endQuizXml>=0," quiz not found ");
+
+            quiz = quiz.substring(beginQuizXml, endQuizXml).replaceAll(paragraphTagOpen, "")
+                    .replaceAll(paragraphTagClose, "").trim();
+            return quiz;
+        }
+    }
 
             private void gameOver() {
                 mFinalScore = Math.round((float) (QuestionNum[0]) / totalGuesses[0] * 100);
