@@ -37,6 +37,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 
 import java.io.IOException;
+import java.text.CollationElementIterator;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -57,24 +58,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     final int[] QuestionNum = {0};
     final int[] totalGuesses = {0};
 
+    TextView tvht = findViewById(R.id.tvhttps);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        /* https://stackoverflow.com/questions/6503574/how-to-get-html-source-code-from-url-in-android */
-
-        Ion.with(getApplicationContext()).load("https://sites.google.com/asianhope.org/mobileresources").asString().setCallback(new FutureCallback<String>() {
-            @Override
-            public void onCompleted(Exception e, String result) {
-                TextView tvhttp = (TextView) findViewById(R.id.tvhttp);
-
-                tvhttp.setText(result);
-            }
-        });
-
 
                 try {
                     InputStream is = getAssets().open("blayquiz1.xml");
@@ -232,6 +223,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
 
     public static class Extractor {
+        private static CollationElementIterator tvht;
+
         public static void main(String[] args) throws IOException {
             org.jsoup.nodes.Document doc = (org.jsoup.nodes.Document) Jsoup.connect("https://sites.google.com/asianhope.org/mobileresources/home").get();
             Elements links = doc.select("a[href]");
@@ -251,8 +244,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 doc = (org.jsoup.nodes.Document) Jsoup.connect(url).get();
                 quizzes.add(extractQuiz(doc.html()));
 
-            }
-            System.out.println(quizzes.size()+" quizzes extracted");
+            } /*
+            tvht.setText(quizzes.size()+" quizzes extracted"); */
 
         }
 
