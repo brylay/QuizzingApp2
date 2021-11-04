@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -58,12 +59,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     final int[] QuestionNum = {0};
     final int[] totalGuesses = {0};
 
-    TextView tvht = findViewById(R.id.tvhttps);
+   TextView tvht;
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        tvht = (TextView) findViewById(R.id.tvhttps);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -237,6 +240,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             }
             System.out.println(quizLinks.size()+" quizzes found");
+            Log.d("MyApp", quizLinks.size()+" quizzes found");
             ArrayList<String> quizzes = new ArrayList<String>();
             for(String url:quizLinks)
             {
@@ -244,8 +248,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 doc = (org.jsoup.nodes.Document) Jsoup.connect(url).get();
                 quizzes.add(extractQuiz(doc.html()));
 
-            } /*
-            tvht.setText(quizzes.size()+" quizzes extracted"); */
+            }
+            tvht.setText(quizzes.size()+" quizzes extracted");
 
         }
 
@@ -270,6 +274,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             return quiz;
         }
     }
+
 
             private void gameOver() {
                 mFinalScore = Math.round((float) (QuestionNum[0]) / totalGuesses[0] * 100);
